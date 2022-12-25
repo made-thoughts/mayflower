@@ -24,6 +24,7 @@ hs_err_pid*
 
 # IntelliJ IDEA
 .idea
+!.idea/copyright/**
 # Ignore Gradle project-specific cache directory
 .gradle
 
