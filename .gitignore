@@ -27,6 +27,7 @@ hs_err_pid*
 !.idea/copyright/**
 # Ignore Gradle project-specific cache directory
 .gradle
+!gradle/wrapper
 
 # Ignore Gradle build output directory
 build
