@@ -16,7 +16,17 @@
 
 package io.github.madethoughts.mayflower.testplugin;
 
-import mayflower.MayflowerPlugin;
+import io.github.madethoughts.mayflower.MayflowerPlugin;
+import io.github.madethoughts.mayflower.PaperPlugin;
+import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
+import io.micronaut.runtime.event.annotation.EventListener;
 
+@PaperPlugin
 public class TestPlugin extends MayflowerPlugin {
+
+    @EventListener
+    public void sendWorksMessage(EnableEvent event) {
+        getLogger().info("Works, wuhu!");
+    }
+
 }

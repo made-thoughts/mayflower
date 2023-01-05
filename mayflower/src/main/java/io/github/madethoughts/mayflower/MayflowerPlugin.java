@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package mayflower;
+package io.github.madethoughts.mayflower;
 
+import io.github.madethoughts.mayflower.lifecycle.event.DisableEvent;
+import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
+import io.github.madethoughts.mayflower.lifecycle.event.LoadEvent;
 import io.micronaut.context.ApplicationContext;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,8 +32,23 @@ public class MayflowerPlugin extends JavaPlugin {
         applicationContext.registerSingleton(this.getServer());
     }
 
+
     @Override
-    public void onDisable() {
+    public final void onLoad() {
+        applicationContext.getEventPublisher(LoadEvent.class)
+                .publishEvent(new LoadEvent());
+    }
+
+    @Override
+    public final void onEnable() {
+        applicationContext.getEventPublisher(EnableEvent.class)
+                .publishEvent(new EnableEvent());
+    }
+
+    @Override
+    public final void onDisable() {
+        applicationContext.getEventPublisher(DisableEvent.class)
+                        .publishEvent(new DisableEvent());
         applicationContext.close();
     }
 }

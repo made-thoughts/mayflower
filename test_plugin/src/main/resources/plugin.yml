@@ -1,3 +1,4 @@
 name: MayflowerTestPlugin
 main: io.github.madethoughts.mayflower.testplugin.TestPlugin
 version: 1.0
+api-version: 1.19

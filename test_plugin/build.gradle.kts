@@ -20,6 +20,7 @@ plugins {
 
 
 dependencies {
+    annotationProcessor(project(":mayflower"))
     implementation(project(":mayflower"))
 
     compileOnly(libs.paper)
@@ -30,6 +31,7 @@ tasks {
         dependencies {
             exclude(libs.paper.toString())
         }
+        mergeServiceFiles()
     }
 
     runServer {
