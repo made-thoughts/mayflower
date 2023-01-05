@@ -1,29 +1,20 @@
 plugins {
     java
-    id("io.micronaut.library") version "3.5.1"
 }
 
-group = "io.github.madethougth"
-version = "0.1"
-description = "mayflower"
 
-repositories {
-    maven("https://repo.papermc.io/repository/maven-public/")
-    mavenCentral()
-}
+allprojects {
+    apply(plugin = "java")
 
-dependencies {
-    annotationProcessor("io.micronaut:micronaut-inject-java")
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
 
-    implementation("io.micronaut", "micronaut-inject-java")
-    implementation("io.micronaut", "micronaut-runtime")
-
-    compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+    repositories {
+        maven("https://repo.papermc.io/repository/maven-public/")
+        mavenCentral()
     }
 }
 

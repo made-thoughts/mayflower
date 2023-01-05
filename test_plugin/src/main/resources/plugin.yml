@@ -1,0 +1,3 @@
+name: MayflowerTestPlugin
+main: io.github.madethoughts.mayflower.testplugin.TestPlugin
+version: 1.0
