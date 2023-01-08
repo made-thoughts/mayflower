@@ -1,6 +1,6 @@
 name: Building and testing with gradle
 
-on: [push]
+on: [ push ]
 
 jobs:
   build-and-test:

@@ -27,28 +27,24 @@ public class MayflowerPlugin extends JavaPlugin {
     private final ApplicationContext applicationContext;
 
     public MayflowerPlugin() {
-        this.applicationContext = ApplicationContext.run(this.getClassLoader()).start();
+        this.applicationContext = ApplicationContext.run(getClassLoader()).start();
         applicationContext.registerSingleton(this);
-        applicationContext.registerSingleton(this.getServer());
+        applicationContext.registerSingleton(getServer());
     }
-
 
     @Override
     public final void onLoad() {
-        applicationContext.getEventPublisher(LoadEvent.class)
-                .publishEvent(new LoadEvent());
-    }
-
-    @Override
-    public final void onEnable() {
-        applicationContext.getEventPublisher(EnableEvent.class)
-                .publishEvent(new EnableEvent());
+        applicationContext.getEventPublisher(LoadEvent.class).publishEvent(new LoadEvent());
     }
 
     @Override
     public final void onDisable() {
-        applicationContext.getEventPublisher(DisableEvent.class)
-                        .publishEvent(new DisableEvent());
+        applicationContext.getEventPublisher(DisableEvent.class).publishEvent(new DisableEvent());
         applicationContext.close();
+    }
+
+    @Override
+    public final void onEnable() {
+        applicationContext.getEventPublisher(EnableEvent.class).publishEvent(new EnableEvent());
     }
 }
