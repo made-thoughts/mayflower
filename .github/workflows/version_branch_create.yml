@@ -2,7 +2,7 @@ name: Creates an release branch on release
 
 on:
   release:
-    types: [published]
+    types: [ published ]
 
 jobs:
   create_brach:

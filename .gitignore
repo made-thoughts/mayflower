@@ -25,6 +25,7 @@ hs_err_pid*
 # IntelliJ IDEA
 .idea
 !.idea/copyright/**
+!.idea/codeStyles/**
 # Ignore Gradle project-specific cache directory
 .gradle
 !gradle/wrapper
