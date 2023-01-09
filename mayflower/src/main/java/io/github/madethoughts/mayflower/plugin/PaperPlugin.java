@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.testplugin;
+package io.github.madethoughts.mayflower.plugin;
 
-import io.github.madethoughts.mayflower.plugin.MayflowerPlugin;
-import io.github.madethoughts.mayflower.plugin.PaperPlugin;
-import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
-import io.micronaut.runtime.event.annotation.EventListener;
+import jakarta.inject.Singleton;
 
-@PaperPlugin
-public class TestPlugin extends MayflowerPlugin {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    @EventListener
-    public void sendWorksMessage(EnableEvent event) {
-        getLogger().info("Works, wuhu!");
-    }
-
+@Singleton
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Inherited
+public @interface PaperPlugin {
 }

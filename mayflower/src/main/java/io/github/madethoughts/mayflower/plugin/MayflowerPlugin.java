@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower;
+package io.github.madethoughts.mayflower.plugin;
 
 import io.github.madethoughts.mayflower.lifecycle.event.DisableEvent;
 import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
