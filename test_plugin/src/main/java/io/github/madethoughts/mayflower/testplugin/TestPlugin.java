@@ -16,9 +16,9 @@
 
 package io.github.madethoughts.mayflower.testplugin;
 
+import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
 import io.github.madethoughts.mayflower.plugin.MayflowerPlugin;
 import io.github.madethoughts.mayflower.plugin.PaperPlugin;
-import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
 import io.micronaut.runtime.event.annotation.EventListener;
 
 @PaperPlugin
