@@ -26,7 +26,7 @@ dependencies {
     annotationProcessor("io.micronaut:micronaut-inject-java")
 
     api("io.micronaut", "micronaut-inject-java")
-    api("io.micronaut", "micronaut-runtime")
+    api("io.micronaut", "micronaut-context")
 
     compileOnly(libs.paper)
 }
