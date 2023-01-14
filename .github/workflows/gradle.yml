@@ -17,3 +17,11 @@ jobs:
         run: gradle build -x test
       - name: Test with gradle
         run: gradle test
+      - name: Prepare test run
+        run: |
+          mkdir -p test_plugin/run
+          echo "eula=true" > test_plugin/run/eula.txt
+      - name: Run Test Server
+        run: MICRONAUT_ENVIRONMENTS=shutdown gradle runServer
+      - name: Assert Plugin load
+        run: grep -F '[MayflowerTestPlugin] Works, wuhu!' < test_plugin/run/logs/latest.log
