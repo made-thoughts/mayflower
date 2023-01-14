@@ -19,11 +19,12 @@ package io.github.madethoughts.mayflower.testplugin;
 import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
 import io.github.madethoughts.mayflower.listener.McListener;
 import io.github.madethoughts.mayflower.plugin.MayflowerPlugin;
-import io.github.madethoughts.mayflower.plugin.PaperPlugin;
+import io.github.madethoughts.mayflower.plugin.McPlugin;
 import io.micronaut.runtime.event.annotation.EventListener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-@PaperPlugin
+@SuppressWarnings("ALL")
+@McPlugin(name = "TestPlugin", version = "0.1", apiVersion = McPlugin.ApiVersion.V1_19, authors = "goldmensch")
 public class TestPlugin extends MayflowerPlugin {
 
     @EventListener

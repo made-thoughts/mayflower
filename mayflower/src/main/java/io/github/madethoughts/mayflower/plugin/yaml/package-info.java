@@ -14,22 +14,4 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.plugin;
-
-import jakarta.inject.Singleton;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-/**
- This annotation indicates that a class is the plugin's entrypoint, the class must also extend {@link MayflowerPlugin}
- */
-@Singleton
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Inherited
-public @interface PaperPlugin {
-}
+package io.github.madethoughts.mayflower.plugin.yaml;
