@@ -38,7 +38,7 @@ import java.util.stream.Stream;
 public class McPluginVisitor implements TypeElementVisitor<McPlugin, Object> {
 
     private static final String PLUGIN_YAML = "plugin.yml";
-    private static final String TEMPLATE_PLUGIN_YAML = "template-plugin.yml";
+    private static final String TEMPLATE_PLUGIN_YAML = "override.plugin.yml";
     private static final BiPredicate<Path, BasicFileAttributes> TEMPLATE_PLUGIN_YAML_PREDICATE =
             (path, basicFileAttributes) -> path.endsWith(Path.of("resources", TEMPLATE_PLUGIN_YAML));
     private final Yaml yaml = new Yaml();
