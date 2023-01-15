@@ -14,22 +14,15 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.testplugin;
+package io.github.madethoughts.mayflower.lifecycle.event.internal;
 
-import io.github.madethoughts.mayflower.listener.McEventListener;
-import io.github.madethoughts.mayflower.listener.McListener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import io.github.madethoughts.mayflower.lifecycle.event.LoadEvent;
+import io.micronaut.context.env.Environment;
 
-@SuppressWarnings("ALL")
-@McListener
-public class PlayerJoinListener implements McEventListener<PlayerJoinEvent> {
-    @Override
-    public void onEvent(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage("manuell mc event listener");
-    }
-
-    @Override
-    public boolean isSupported(PlayerJoinEvent event) {
-        return false;
-    }
+/**
+ An event that is called before the {@link LoadEvent} is called.
+ This event should not depend on any setup made. Things like the plugin config are initialized in this state.
+ The {@link Environment} is refreshed after all listeners ran. (using {@link Environment#refresh()}
+ */
+public class PreLoadEvent {
 }

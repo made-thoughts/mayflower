@@ -6,6 +6,7 @@ module io.github.madethoughts.mayflower {
     requires io.micronaut.inject;
     requires io.micronaut.aop;
     requires io.micronaut.context;
+    requires io.micronaut.core;
 
     requires jakarta.inject;
     requires org.jetbrains.annotations;
@@ -17,6 +18,8 @@ module io.github.madethoughts.mayflower {
     exports io.github.madethoughts.mayflower.plugin;
     exports io.github.madethoughts.mayflower.listener;
     exports io.github.madethoughts.mayflower.lifecycle.event;
+    exports io.github.madethoughts.mayflower.configuration;
+    exports io.github.madethoughts.mayflower.lifecycle.event.internal;
 
     provides TypeElementVisitor with io.github.madethoughts.mayflower.plugin.yaml.McPluginVisitor;
 }

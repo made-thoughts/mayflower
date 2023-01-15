@@ -16,20 +16,24 @@
 
 package io.github.madethoughts.mayflower.testplugin;
 
-import io.github.madethoughts.mayflower.listener.McEventListener;
-import io.github.madethoughts.mayflower.listener.McListener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import io.micronaut.context.annotation.Context;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Singleton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("ALL")
-@McListener
-public class PlayerJoinListener implements McEventListener<PlayerJoinEvent> {
-    @Override
-    public void onEvent(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage("manuell mc event listener");
+@Singleton
+@Context
+public class ConfigTester {
+    private static final Logger log = LoggerFactory.getLogger(ConfigTester.class);
+    private final TestConfig testConfig;
+
+    public ConfigTester(TestConfig testConfig) {
+        this.testConfig = testConfig;
     }
 
-    @Override
-    public boolean isSupported(PlayerJoinEvent event) {
-        return false;
+    @PostConstruct
+    void init() {
+        log.info(testConfig.migrate4());
     }
 }

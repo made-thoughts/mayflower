@@ -16,20 +16,18 @@
 
 package io.github.madethoughts.mayflower.plugin.yaml;
 
+import io.github.madethoughts.mayflower.internal.FileUtils;
 import io.github.madethoughts.mayflower.plugin.McPlugin;
 import io.micronaut.inject.ast.ClassElement;
 import io.micronaut.inject.visitor.TypeElementVisitor;
 import io.micronaut.inject.visitor.VisitorContext;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiPredicate;
-import java.util.stream.Stream;
 
 /**
  Generates a plugin.yml from the {@link McPlugin} annotation.
@@ -48,9 +46,9 @@ public class McPluginVisitor implements TypeElementVisitor<McPlugin, Object> {
         var projectDir = context.getProjectDir().orElseThrow();
 
         // search for existing file
-        var data = find(projectDir).findFirst()
-                .map(McPluginVisitor::readString)
-                .map(s -> new Yaml().<Map<String, Object>>load(s)).orElseGet(HashMap::new);
+        var data = FileUtils.find(projectDir, 6, TEMPLATE_PLUGIN_YAML_PREDICATE).findFirst()
+                                             .map(FileUtils::readString)
+                                             .map(s -> new Yaml().<Map<String, Object>>load(s)).orElseGet(HashMap::new);
 
         @SuppressWarnings("DataFlowIssue") // annotation should not be null
         var pluginValues = element.getAnnotation(McPlugin.class).getValues().entrySet();
@@ -80,31 +78,6 @@ public class McPluginVisitor implements TypeElementVisitor<McPlugin, Object> {
 
         var ouputPath = context.getClassesOutputPath().orElseThrow().resolve(PLUGIN_YAML);
         var dump = yaml.dump(data);
-        writeString(ouputPath, dump);
-    }
-
-    private static Stream<Path> find(Path start) {
-        try {
-            // 6 should be enough depth based on the gradle file hierarchy
-            return Files.find(start, 6, TEMPLATE_PLUGIN_YAML_PREDICATE);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static String readString(Path path) {
-        try {
-            return Files.readString(path);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void writeString(Path path, String text) {
-        try {
-            Files.writeString(path, text);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FileUtils.writeString(ouputPath, dump);
     }
 }
