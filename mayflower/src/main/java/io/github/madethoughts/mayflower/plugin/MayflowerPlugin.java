@@ -33,10 +33,19 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class MayflowerPlugin extends JavaPlugin {
 
+    /**
+     The plugin environment, indicating that this plugin runs on a minecraft server.
+     */
+    public static final String PLUGIN_ENVIRONMENT = "plugin";
+
     private final ApplicationContext applicationContext;
 
     protected MayflowerPlugin() {
-        applicationContext = ApplicationContext.run(getClassLoader()).start();
+        applicationContext = ApplicationContext.builder(getClassLoader(), PLUGIN_ENVIRONMENT)
+                                               .deduceEnvironment(false)
+                                               .banner(false)
+                                               .propertySources()
+                                               .start();
     }
 
     @Override
