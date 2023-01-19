@@ -20,6 +20,7 @@ import io.micronaut.aop.Adapter;
 import io.micronaut.core.annotation.Indexed;
 import io.micronaut.runtime.event.annotation.EventListener;
 import jakarta.inject.Singleton;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 
 import java.lang.annotation.ElementType;
@@ -40,6 +41,13 @@ public @interface McListener {
 
     /**
      @return The events priority
+     @see EventHandler#priority()
      */
     EventPriority priority() default EventPriority.NORMAL;
+
+    /**
+     @return whether this listener should ignore cancelled events
+     @see EventHandler#ignoreCancelled()
+     */
+    boolean ignoreCancelled() default false;
 }

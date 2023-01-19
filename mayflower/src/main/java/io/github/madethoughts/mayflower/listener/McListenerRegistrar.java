@@ -62,12 +62,13 @@ public final class McListenerRegistrar implements ApplicationEventListener<Enabl
             var eventClass =
                     (Class<? extends Event>) definition.getTypeArguments(McEventListener.class).get(0).getType();
             var priority = listenerAnnotation.getRequiredValue("priority", EventPriority.class);
+            var ignoreCancelled = listenerAnnotation.getRequiredValue("ignoreCancelled", boolean.class);
             @SuppressWarnings({"rawtypes", "unchecked"}) // type safety enforced by generics in McEventListener
             var executor = new McEventListenerExecutor(listener, eventClass);
 
-            pluginManager.registerEvent(eventClass, listener, priority, executor, plugin);
-            log.debug("Listener {} registered on mc event {} with priority {}", listener.getClass(), eventClass,
-                    priority
+            pluginManager.registerEvent(eventClass, listener, priority, executor, plugin, ignoreCancelled);
+            log.debug("Listener {} registered on mc event {} with priority {} and ignoreCancelled {}",
+                    listener.getClass(), eventClass, priority, ignoreCancelled
             );
         }
     }
