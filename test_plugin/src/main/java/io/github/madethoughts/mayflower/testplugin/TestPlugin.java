@@ -24,7 +24,7 @@ import io.micronaut.runtime.event.annotation.EventListener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 @SuppressWarnings("ALL")
-@McPlugin(name = "TestPlugin", version = "0.1", apiVersion = McPlugin.ApiVersion.V1_19, authors = "goldmensch")
+@McPlugin(name = "MayflowerTestPlugin", version = "0.1", apiVersion = McPlugin.ApiVersion.V1_19, authors = "goldmensch")
 public class TestPlugin extends MayflowerPlugin {
 
     @EventListener
