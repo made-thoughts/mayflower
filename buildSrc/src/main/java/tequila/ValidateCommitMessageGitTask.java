@@ -8,7 +8,10 @@ import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskExecutionException;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -21,18 +24,17 @@ public class ValidateCommitMessageGitTask extends DefaultTask {
     public static final Pattern HEADER_PATTERN =
             Pattern.compile("^(?<type>\\w+?)(?:\\((?<scope>\\w+?)\\))?!?: (?<message>\\S.*[^.])$");
 
-    protected final Repository repository = new RepositoryBuilder()
-            .setGitDir(new File(getProject().getRootDir(), ".git"))
-            .readEnvironment()
-            .build();
+    protected final Repository repository =
+            new RepositoryBuilder().setGitDir(new File(getProject().getRootDir(), ".git")).readEnvironment()
+                    .build();
 
     protected final Git git = new Git(repository);
 
     protected final Collection<String> types = parseList(getProject().property("commit.types"));
 
     protected final Collection<String> scopes = isTemplateRepository(repository)
-            ? TEMPLATE_PROJECT_SCOPES
-            : parseList(getProject().property("commit.scopes"));
+                                                ? TEMPLATE_PROJECT_SCOPES
+                                                : parseList(getProject().property("commit.scopes"));
 
     public ValidateCommitMessageGitTask() throws Exception {
     }
@@ -45,9 +47,12 @@ public class ValidateCommitMessageGitTask extends DefaultTask {
         }
 
         var errors = new ArrayList<String>();
-        var header = message.lines().findFirst().orElseThrow();
+        var header = message.lines()
+                .findFirst().orElseThrow();
         errors.addAll(validateHeader(header));
-        var footer = message.lines().skip(1).collect(Collectors.joining("\n"));
+        var footer = message.lines()
+                .skip(1)
+                .collect(Collectors.joining("\n"));
         errors.addAll(validateFooter(footer));
         errors.forEach(s -> System.out.println("Error: %s".formatted(s))); // dirty gradle bash hack
     }
@@ -80,13 +85,13 @@ public class ValidateCommitMessageGitTask extends DefaultTask {
     }
 
     public boolean isTemplateRepository(Repository repository) {
-        return repository.getConfig().getString("remote", "origin", "url")
-                .toLowerCase()
-                .contains(TEMPLATE_PROJECT_ORIGIN);
+        return repository.getConfig().getString("remote", "origin", "url").toLowerCase()
+                         .contains(TEMPLATE_PROJECT_ORIGIN);
     }
 
     protected Collection<String> parseList(Object source) {
-        return Arrays.stream(((String) source).split(",")).map(String::trim)
+        return Arrays.stream(((String) source).split(","))
+                .map(String::trim)
                 .toList();
     }
 }

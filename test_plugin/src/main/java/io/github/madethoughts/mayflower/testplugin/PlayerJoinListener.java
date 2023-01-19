@@ -16,24 +16,20 @@
 
 package io.github.madethoughts.mayflower.testplugin;
 
-import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
+import io.github.madethoughts.mayflower.listener.McEventListener;
 import io.github.madethoughts.mayflower.listener.McListener;
-import io.github.madethoughts.mayflower.plugin.MayflowerPlugin;
-import io.github.madethoughts.mayflower.plugin.PaperPlugin;
-import io.micronaut.runtime.event.annotation.EventListener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-@PaperPlugin
-public class TestPlugin extends MayflowerPlugin {
-
-    @EventListener
-    public void sendWorksMessage(EnableEvent event) {
-        getLogger().info("Works, wuhu!");
+@McListener
+public class PlayerJoinListener
+        implements McEventListener<PlayerJoinEvent> {
+    @Override
+    public void onEvent(PlayerJoinEvent event) {
+        event.getPlayer().sendMessage("manuell mc event listener");
     }
 
-    @McListener
-    public void test(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage("test");
+    @Override
+    public boolean isSupported(PlayerJoinEvent event) {
+        return false;
     }
-
 }
