@@ -6,5 +6,9 @@ module mayflower.test.plugin.main {
 
     //    requires io.micronaut.inject;
 //    requires io.micronaut.aop;
+    requires jakarta.annotation;
+    requires io.micronaut.aop;
     requires io.micronaut.context;
+    requires io.micronaut.inject;
+    requires jakarta.inject;
 }
