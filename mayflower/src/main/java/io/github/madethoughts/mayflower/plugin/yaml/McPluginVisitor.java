@@ -39,10 +39,18 @@ public class McPluginVisitor implements TypeElementVisitor<McPlugin, Object> {
     private static final String TEMPLATE_PLUGIN_YAML = "override.plugin.yml";
     private static final BiPredicate<Path, BasicFileAttributes> TEMPLATE_PLUGIN_YAML_PREDICATE =
             (path, basicFileAttributes) -> path.endsWith(Path.of("resources", TEMPLATE_PLUGIN_YAML));
+    public static final String INNER_CLASS_ERR = "@McPlugin is not permitted on inner classes";
     private final Yaml yaml = new Yaml();
 
     @Override
     public void visitClass(ClassElement element, VisitorContext context) {
+        // skip inner classes, the root class have to be annotated with this annotation
+        if (element.isInner()) {
+            if (element.hasAnnotation(McPlugin.class)) {
+                context.fail(INNER_CLASS_ERR, element);
+            }
+            return;
+        }
         var projectDir = context.getProjectDir().orElseThrow();
 
         // search for existing file
