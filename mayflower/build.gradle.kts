@@ -30,6 +30,7 @@ dependencies {
 
     compileOnly(libs.paper)
 
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java")
     testAnnotationProcessor(project(":mayflower"))
     testAnnotationProcessor(libs.paper)
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.plugin;
+package io.github.madethoughts.mayflower.configuration;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
@@ -22,14 +22,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import plugin.TestPlugin;
 
-public class MayflowerTest {
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+public abstract class MayflowerConfigurationTest {
+    public static final Path RESOURCES_ROOT = Path.of("src", "test", "resources").toAbsolutePath();
 
     protected ServerMock server;
     protected TestPlugin plugin;
+    protected Path config;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws IOException {
         server = MockBukkit.mock();
+        createConfig();
         plugin = MockBukkit.load(TestPlugin.class);
     }
 
@@ -37,4 +44,16 @@ public class MayflowerTest {
     public void tearDown() {
         MockBukkit.unmock();
     }
+
+    protected void createConfig() throws IOException {
+        config = Path.of(server.getPluginManager().getParentTemporaryDirectory().getAbsolutePath(),
+                "MayflowerTestPlugin-0.1", "config.yml"
+        );
+
+        Files.createDirectories(config.getParent());
+
+        Files.copy(templateConfig(), config);
+    }
+
+    protected abstract Path templateConfig();
 }

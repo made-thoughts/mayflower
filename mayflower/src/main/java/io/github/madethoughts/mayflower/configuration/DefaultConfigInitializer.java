@@ -116,7 +116,7 @@ public class DefaultConfigInitializer implements ApplicationEventListener<PreLoa
         configuration.addDefaults(defaultConfig);
 
         // check if versions are different major versions. If they are, run config migrations.
-        if (1 < latestVersion - currentVersion) {
+        if (Math.floor(latestVersion) != Math.floor(currentVersion)) {
             log.info("Starting major version migration, this will add new, remove, rename or modify existing options.");
             runConfigMigrations(currentVersion, latestVersion);
         } else {
@@ -177,7 +177,8 @@ public class DefaultConfigInitializer implements ApplicationEventListener<PreLoa
                        .sorted(Comparator.comparingDouble(Pair::version))
                        .toList();
 
-        Preconditions.checkCondition(() -> (int) (latestVersion - currentVersion) == migrations.size(),
+        Preconditions.checkCondition(
+                () -> (int) (Math.floor(latestVersion) - Math.floor(currentVersion)) == migrations.size(),
                 "Missing major config version migrations found."
         );
         for (var migration : migrations) {

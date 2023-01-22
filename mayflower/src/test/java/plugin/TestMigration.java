@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.plugin;
+package plugin;
 
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.java.JavaPluginLoader;
+import io.github.madethoughts.mayflower.configuration.ConfigMigration;
+import io.github.madethoughts.mayflower.configuration.Migration;
+import io.micronaut.context.annotation.Bean;
+import org.bukkit.configuration.file.FileConfiguration;
 
-import java.io.File;
-
-@McPlugin(name = "MayflowerTestPlugin",
-          version = "0.1",
-          apiVersion = McPlugin.ApiVersion.V1_19,
-          authors = {"goldmensch", "Taucher2003"}
-)
-public class TestPlugin extends MayflowerPlugin {
-    public TestPlugin() {
-        super();
-    }
-
-    protected TestPlugin(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
-        super(loader, description, dataFolder, file);
+@Migration(2)
+@Bean
+public class TestMigration implements ConfigMigration {
+    @Override
+    public void migrate(FileConfiguration config) {
+        config.set("valueToMigrate", "migrated");
     }
 }

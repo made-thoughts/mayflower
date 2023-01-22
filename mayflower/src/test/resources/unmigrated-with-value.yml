@@ -1,0 +1,3 @@
+version: 1.0
+someValue: "Not default value"
+valueToMigrate: "not-migrated"

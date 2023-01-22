@@ -14,27 +14,17 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.plugin;
+package plugin;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import plugin.TestPlugin;
+import io.github.madethoughts.mayflower.configuration.Default;
+import io.github.madethoughts.mayflower.configuration.PluginConfig;
 
-public class MayflowerTest {
+@PluginConfig(version = 2.2)
+public interface Config {
 
-    protected ServerMock server;
-    protected TestPlugin plugin;
+    @Default("some-default-value")
+    String someValue();
 
-    @BeforeEach
-    public void setUp() {
-        server = MockBukkit.mock();
-        plugin = MockBukkit.load(TestPlugin.class);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        MockBukkit.unmock();
-    }
+    @Default("nope")
+    String valueToMigrate();
 }
