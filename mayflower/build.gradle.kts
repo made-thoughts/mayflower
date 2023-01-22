@@ -29,4 +29,20 @@ dependencies {
     api("io.micronaut", "micronaut-context")
 
     compileOnly(libs.paper)
+
+    testAnnotationProcessor(project(":mayflower"))
+    testAnnotationProcessor(libs.paper)
+
+    testImplementation(libs.paper)
+    testImplementation("com.github.seeseemelk", "MockBukkit-v1.19", "2.144.4")
+    testImplementation("org.junit.jupiter", "junit-jupiter", "5.8.2")
+    testImplementation("org.assertj", "assertj-core", "3.22.0")
+    testImplementation("ch.qos.logback", "logback-classic", "1.4.5")
+    testImplementation("com.gitlab.taucher2003.t2003-utils", "log", "1.1-alpha.20")
+}
+
+tasks {
+    test {
+        useJUnitPlatform()
+    }
 }

@@ -22,7 +22,11 @@ import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
 import io.github.madethoughts.mayflower.lifecycle.event.LoadEvent;
 import io.github.madethoughts.mayflower.lifecycle.event.internal.PreLoadEvent;
 import io.micronaut.context.ApplicationContext;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
+
+import java.io.File;
 
 /**
  This class is the main entry point for each mayflower plugin. It replaces paper's {@link JavaPlugin} class.
@@ -40,14 +44,20 @@ public class MayflowerPlugin extends JavaPlugin {
      */
     public static final String PLUGIN_ENVIRONMENT = "plugin";
 
-    private final ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext =
+            ApplicationContext.builder(getClassLoader(), PLUGIN_ENVIRONMENT)
+                              .deduceEnvironment(false)
+                              .banner(false)
+                              .propertySources(new ConfigPropertySource(this))
+                              .build();
 
     protected MayflowerPlugin() {
-        applicationContext = ApplicationContext.builder(getClassLoader(), PLUGIN_ENVIRONMENT)
-                                               .deduceEnvironment(false)
-                                               .banner(false)
-                                               .propertySources(new ConfigPropertySource(this))
-                                               .build();
+    }
+
+    @SuppressWarnings("removal")
+    // only used for testing by MockBukkit
+    protected MayflowerPlugin(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+        super(loader, description, dataFolder, file);
     }
 
     @Override
