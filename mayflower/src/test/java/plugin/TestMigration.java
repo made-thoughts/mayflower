@@ -14,22 +14,18 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.testplugin;
+package plugin;
 
-import io.github.madethoughts.mayflower.listener.McEventListener;
-import io.github.madethoughts.mayflower.listener.McListener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import io.github.madethoughts.mayflower.configuration.ConfigMigration;
+import io.github.madethoughts.mayflower.configuration.Migration;
+import io.micronaut.context.annotation.Bean;
+import org.bukkit.configuration.file.FileConfiguration;
 
-@SuppressWarnings("ALL")
-@McListener
-public class PlayerJoinListener implements McEventListener<PlayerJoinEvent> {
+@Migration(2)
+@Bean
+public class TestMigration implements ConfigMigration {
     @Override
-    public void onEvent(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage("manuell mc event listener");
-    }
-
-    @Override
-    public boolean isSupported(PlayerJoinEvent event) {
-        return false;
+    public void migrate(FileConfiguration config) {
+        config.set("valueToMigrate", "migrated");
     }
 }

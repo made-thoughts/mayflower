@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.testplugin;
+package plugin;
 
-import io.github.madethoughts.mayflower.listener.McEventListener;
-import io.github.madethoughts.mayflower.listener.McListener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import io.github.madethoughts.mayflower.configuration.Default;
+import io.github.madethoughts.mayflower.configuration.PluginConfig;
 
-@SuppressWarnings("ALL")
-@McListener
-public class PlayerJoinListener implements McEventListener<PlayerJoinEvent> {
-    @Override
-    public void onEvent(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage("manuell mc event listener");
-    }
+@PluginConfig(version = 2.2)
+public interface Config {
 
-    @Override
-    public boolean isSupported(PlayerJoinEvent event) {
-        return false;
-    }
+    @Default("some-default-value")
+    String someValue();
+
+    @Default("nope")
+    String valueToMigrate();
 }

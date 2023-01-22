@@ -14,4 +14,17 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.plugin;
+package io.github.madethoughts.mayflower.testplugin;
+
+import io.github.madethoughts.mayflower.configuration.ConfigMigration;
+import io.github.madethoughts.mayflower.configuration.Migration;
+import org.bukkit.configuration.file.FileConfiguration;
+
+@SuppressWarnings("ALL")
+@Migration(2)
+public class ConfigMigration2 implements ConfigMigration {
+    @Override
+    public void migrate(FileConfiguration config) {
+        config.set("migrate2", "refreshed values arrrrasdfffffffff");
+    }
+}

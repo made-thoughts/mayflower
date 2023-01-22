@@ -14,22 +14,27 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.testplugin;
+package io.github.madethoughts.mayflower.plugin;
 
-import io.github.madethoughts.mayflower.listener.McEventListener;
-import io.github.madethoughts.mayflower.listener.McListener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import be.seeseemelk.mockbukkit.MockBukkit;
+import be.seeseemelk.mockbukkit.ServerMock;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import plugin.TestPlugin;
 
-@SuppressWarnings("ALL")
-@McListener
-public class PlayerJoinListener implements McEventListener<PlayerJoinEvent> {
-    @Override
-    public void onEvent(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage("manuell mc event listener");
+public class MayflowerTest {
+
+    protected ServerMock server;
+    protected TestPlugin plugin;
+
+    @BeforeEach
+    public void setUp() {
+        server = MockBukkit.mock();
+        plugin = MockBukkit.load(TestPlugin.class);
     }
 
-    @Override
-    public boolean isSupported(PlayerJoinEvent event) {
-        return false;
+    @AfterEach
+    public void tearDown() {
+        MockBukkit.unmock();
     }
 }

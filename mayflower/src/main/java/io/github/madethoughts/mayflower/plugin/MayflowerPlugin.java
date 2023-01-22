@@ -16,11 +16,17 @@
 
 package io.github.madethoughts.mayflower.plugin;
 
+import io.github.madethoughts.mayflower.configuration.ConfigPropertySource;
 import io.github.madethoughts.mayflower.lifecycle.event.DisableEvent;
 import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
 import io.github.madethoughts.mayflower.lifecycle.event.LoadEvent;
+import io.github.madethoughts.mayflower.lifecycle.event.internal.PreLoadEvent;
 import io.micronaut.context.ApplicationContext;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
+
+import java.io.File;
 
 /**
  This class is the main entry point for each mayflower plugin. It replaces paper's {@link JavaPlugin} class.
@@ -33,17 +39,37 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class MayflowerPlugin extends JavaPlugin {
 
-    private final ApplicationContext applicationContext;
+    /**
+     The plugin environment, indicating that this plugin runs on a minecraft server.
+     */
+    public static final String PLUGIN_ENVIRONMENT = "plugin";
+
+    private final ApplicationContext applicationContext =
+            ApplicationContext.builder(getClassLoader(), PLUGIN_ENVIRONMENT)
+                              .deduceEnvironment(false)
+                              .banner(false)
+                              .propertySources(new ConfigPropertySource(this))
+                              .build();
 
     protected MayflowerPlugin() {
-        applicationContext = ApplicationContext.run(getClassLoader()).start();
+    }
+
+    @SuppressWarnings("removal")
+    // only used for testing by MockBukkit
+    protected MayflowerPlugin(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+        super(loader, description, dataFolder, file);
     }
 
     @Override
     public final void onLoad() {
+        applicationContext.start();
+
         applicationContext.registerSingleton(this);
         applicationContext.registerSingleton(getServer());
 
+        applicationContext.getEventPublisher(PreLoadEvent.class).publishEvent(new PreLoadEvent());
+        // refresh the environment so configs are reloaded
+        applicationContext.getEnvironment().refresh();
         applicationContext.getEventPublisher(LoadEvent.class).publishEvent(new LoadEvent());
     }
 

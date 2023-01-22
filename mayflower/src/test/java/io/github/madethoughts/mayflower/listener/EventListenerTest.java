@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.madethoughts.mayflower.testplugin;
+package io.github.madethoughts.mayflower.listener;
 
-import io.github.madethoughts.mayflower.listener.McEventListener;
-import io.github.madethoughts.mayflower.listener.McListener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import io.github.madethoughts.mayflower.plugin.MayflowerTest;
+import org.junit.jupiter.api.Test;
+import plugin.PlayerJoinEventListener;
 
-@SuppressWarnings("ALL")
-@McListener
-public class PlayerJoinListener implements McEventListener<PlayerJoinEvent> {
-    @Override
-    public void onEvent(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage("manuell mc event listener");
-    }
+import static org.assertj.core.api.Assertions.assertThat;
 
-    @Override
-    public boolean isSupported(PlayerJoinEvent event) {
-        return false;
+public class EventListenerTest extends MayflowerTest {
+
+    @Test
+    void callsEventListeners() {
+        server.addPlayer();
+
+        assertThat(plugin.applicationContext().getBean(PlayerJoinEventListener.class).getEventCalls()).isEqualTo(1);
     }
 }

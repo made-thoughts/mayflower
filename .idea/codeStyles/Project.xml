@@ -47,6 +47,7 @@
       <option name="BINARY_OPERATION_WRAP" value="1" />
       <option name="TERNARY_OPERATION_WRAP" value="5" />
       <option name="TERNARY_OPERATION_SIGNS_ON_NEXT_LINE" value="true" />
+      <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="true" />
       <option name="ARRAY_INITIALIZER_WRAP" value="1" />
       <option name="ARRAY_INITIALIZER_LBRACE_ON_NEXT_LINE" value="true" />
       <option name="ARRAY_INITIALIZER_RBRACE_ON_NEXT_LINE" value="true" />
@@ -58,8 +59,6 @@
       <option name="PARAMETER_ANNOTATION_WRAP" value="2" />
       <option name="VARIABLE_ANNOTATION_WRAP" value="2" />
       <option name="ENUM_CONSTANTS_WRAP" value="2" />
-      <option name="BUILDER_METHODS" value="min,max,toArray,map,collect,toList,count,limit,filter,anyMatch,flatMap,forEach,findAny,skip,peek,reduce,distinct,findFirst,allMatch,sorted,forEachOrdered,mapToInt,mapToLong,mapToDouble,mapMulti,takeWhile,dropWhile,noneMatch,flatMapToInt,flatMapToDouble,flatMapToLong,mapMultiToInt,mapMultiToLong,mapMultiToDouble,iterator,spliterator,close,parallel,onClose,sequential,isParallel,unordered,sum,mapToObj,boxed,asLongStream,asDoubleStream,average,summaryStatistics,add,accept,build,andThen" />
-      <option name="KEEP_BUILDER_METHODS_INDENTS" value="true" />
       <option name="WRAP_ON_TYPING" value="1" />
       <option name="SOFT_MARGINS" value="80" />
       <arrangement>
@@ -74,6 +73,19 @@
           </group>
         </groups>
         <rules>
+          <section>
+            <rule>
+              <match>
+                <AND>
+                  <FIELD>true</FIELD>
+                  <FINAL>true</FINAL>
+                  <NAME>log</NAME>
+                  <PRIVATE>true</PRIVATE>
+                  <STATIC>true</STATIC>
+                </AND>
+              </match>
+            </rule>
+          </section>
           <section>
             <rule>
               <match>
@@ -331,13 +343,6 @@
                   <CLASS>true</CLASS>
                   <STATIC>true</STATIC>
                 </AND>
-              </match>
-            </rule>
-          </section>
-          <section>
-            <rule>
-              <match>
-                <CLASS>true</CLASS>
               </match>
             </rule>
           </section>
