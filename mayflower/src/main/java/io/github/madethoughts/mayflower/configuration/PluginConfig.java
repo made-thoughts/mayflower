@@ -19,7 +19,6 @@ package io.github.madethoughts.mayflower.configuration;
 import io.micronaut.context.annotation.AliasFor;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.AccessorsStyle;
-import io.micronaut.core.version.annotation.Version;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -27,19 +26,21 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- This annotation indicates, that this configuration is the plugin's config. The values for this config will also be
- loaded from the "config.yml" file in the plugins' directory. Also, all entries of this configuration need a default
- value, for that {@link Default} can be used. The corresponding "config.yml" will have default values based on them.
- <p>
- All {@link PluginConfig} implementations must have a {@link Version} annotation. The version format is "minor.major"
- and "number.number". The semantics are equal to schematic versioning.
- <p>
- Major version bumps should only be made if
- breaking changes are applied, for example removing an option, renaming or changing the purpose. For every major
- version update a {@link ConfigMigration} must be provided.
- <p>
- Minor version bumps should only be made if non-breaking changes are applied, for example adding a new option or
- changing the default value.
+This annotation indicates, that this configuration is the plugin's config. The values for this config will also be
+loaded from the "config.yml" file in the plugins' directory. Also, all entries of this configuration need a default
+value, for that {@link Default} can be used. The corresponding "config.yml" will have default values based on them.
+<p>
+The "root" {@link PluginConfig} implementations must have the version field set to a positive number. The version
+ format is "major
+.minor"
+and "number.number". The semantics are equal to schematic versioning.
+<p>
+Major version bumps should only be made if
+breaking changes are applied, for example removing an option, renaming or changing the purpose. For every major
+version update a {@link ConfigMigration} must be provided.
+<p>
+Minor version bumps should only be made if non-breaking changes are applied, for example adding a new option or
+changing the default value.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})

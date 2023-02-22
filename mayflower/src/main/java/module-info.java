@@ -19,7 +19,6 @@ module io.github.madethoughts.mayflower {
     exports io.github.madethoughts.mayflower.listener;
     exports io.github.madethoughts.mayflower.lifecycle.event;
     exports io.github.madethoughts.mayflower.configuration;
-    exports io.github.madethoughts.mayflower.lifecycle.event.internal;
 
     provides TypeElementVisitor with io.github.madethoughts.mayflower.plugin.yaml.McPluginVisitor;
 }
