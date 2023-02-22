@@ -21,11 +21,12 @@ plugins {
 
 dependencies {
     annotationProcessor(project(":mayflower"))
+    annotationProcessor(libs.paper)
+
     implementation(project(":mayflower"))
 
     compileOnly(libs.paper)
 }
-
 tasks {
     shadowJar {
         dependencies {

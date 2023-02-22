@@ -16,9 +16,11 @@
 
 package io.github.madethoughts.mayflower.plugin;
 
+import io.github.madethoughts.mayflower.configuration.ConfigPropertySource;
 import io.github.madethoughts.mayflower.lifecycle.event.DisableEvent;
 import io.github.madethoughts.mayflower.lifecycle.event.EnableEvent;
 import io.github.madethoughts.mayflower.lifecycle.event.LoadEvent;
+import io.github.madethoughts.mayflower.lifecycle.event.internal.PreLoadEvent;
 import io.micronaut.context.ApplicationContext;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,17 +35,31 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class MayflowerPlugin extends JavaPlugin {
 
+    /**
+     The plugin environment, indicating that this plugin runs on a minecraft server.
+     */
+    public static final String PLUGIN_ENVIRONMENT = "plugin";
+
     private final ApplicationContext applicationContext;
 
     protected MayflowerPlugin() {
-        applicationContext = ApplicationContext.run(getClassLoader()).start();
+        applicationContext = ApplicationContext.builder(getClassLoader(), PLUGIN_ENVIRONMENT)
+                                               .deduceEnvironment(false)
+                                               .banner(false)
+                                               .propertySources(new ConfigPropertySource(this))
+                                               .build();
     }
 
     @Override
     public final void onLoad() {
+        applicationContext.start();
+
         applicationContext.registerSingleton(this);
         applicationContext.registerSingleton(getServer());
 
+        applicationContext.getEventPublisher(PreLoadEvent.class).publishEvent(new PreLoadEvent());
+        // refresh the environment so configs are reloaded
+        applicationContext.getEnvironment().refresh();
         applicationContext.getEventPublisher(LoadEvent.class).publishEvent(new LoadEvent());
     }
 
