@@ -15,7 +15,7 @@
  */
 
 plugins {
-    id("io.micronaut.library") version "3.7.0"
+    id("io.micronaut.library") version "4.3.5"
 }
 
 group = "io.github.madethougth"
